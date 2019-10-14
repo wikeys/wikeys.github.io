@@ -173,45 +173,45 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>下载好opencv的包，解压到D盘</p>
-<p><img src="../assets/image/1571019501143.png" alt="1571019501143"></p>
+<p><img src="../../../../../../assets/image/1571019501143.png" alt="1571019501143"></p>
 <p>在vs2017中新建好项目，dll项目</p>
-<p><img src="../assets/image/1571019791972.png" alt="1571019791972"></p>
+<p><img src="../../../../../../assets/image/1571019791972.png" alt="1571019791972"></p>
 <p>找到调试-&gt;属性</p>
-<p><img src="../assets/image/1571019531491.png" alt="1571019531491"></p>
+<p><img src="../../../../../../assets/image/1571019531491.png" alt="1571019531491"></p>
 <p>把opencv的这两个目录包含进去</p>
-<p><img src="../assets/image/1571019602387.png" alt="1571019602387"></p>
+<p><img src="../../../../../../assets/image/1571019602387.png" alt="1571019602387"></p>
 <p>库目录则是这个，(测试过，包含vc15时候，使用imshow时候会报错，所以这里包含vc14)</p>
-<p><img src="../assets/image/1571019628725.png" alt="1571019628725"></p>
+<p><img src="../../../../../../assets/image/1571019628725.png" alt="1571019628725"></p>
 <p>然后是添加依赖项</p>
-<p><img src="../assets/image/1571019703253.png" alt="1571019703253"></p>
+<p><img src="../../../../../../assets/image/1571019703253.png" alt="1571019703253"></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">把这个添加进去opencv_world411d.lib</span><br></pre></td></tr></table></figure>
 
 <p>然后环境变量中也需要配置</p>
-<p><img src="../assets/image/1571019761814.png" alt="1571019761814"></p>
+<p><img src="../../../../../../assets/image/1571019761814.png" alt="1571019761814"></p>
 <p>编译成功，找到dll</p>
-<p><img src="../assets/image/1571020039186.png" alt="1571020039186"></p>
+<p><img src="../../../../../../assets/image/1571020039186.png" alt="1571020039186"></p>
 <p>#Python加载dll</p>
 <p>使用cytpes来加载DLL/SO</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">mydll = cdll.LoadLibrary(<span class="string">'Dll1.dll'</span>)</span><br><span class="line">mydll.steganographs(image_path,mark_path)</span><br></pre></td></tr></table></figure>
 
-<h2 id="错误一：32位不兼容64位dll"><a href="#错误一：32位不兼容64位dll" class="headerlink" title="错误一：32位不兼容64位dll"></a>错误一：32位不兼容64位dll</h2><p><img src="../assets/image/1571025199503.png" alt="1571025199503"></p>
+<h2 id="错误一：32位不兼容64位dll"><a href="#错误一：32位不兼容64位dll" class="headerlink" title="错误一：32位不兼容64位dll"></a>错误一：32位不兼容64位dll</h2><p><img src="../../../../../../assets/image/1571025199503.png" alt="1571025199503"></p>
 <p>报错了，原因是：我的vs2017是64位的，编译出来的dll是64位的。而python是32位的，</p>
 <p>解决办法:  重装一个64位的系统</p>
 <h2 id="错误二：Python调用DLL函数之传递数值"><a href="#错误二：Python调用DLL函数之传递数值" class="headerlink" title="错误二：Python调用DLL函数之传递数值"></a>错误二：Python调用DLL函数之传递数值</h2><p>如果直接传值，只会传入第一个字符</p>
-<p><img src="../assets/image/1571025505355.png" alt="1571025505355"></p>
+<p><img src="../../../../../../assets/image/1571025505355.png" alt="1571025505355"></p>
 <p>需要使用ctypes 中的c_char_p  需要注意必须是bytes格式</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">mydll = cdll.LoadLibrary(<span class="string">'Dll1.dll'</span>)</span><br><span class="line">image_path = c_char_p(bytes(image_path,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">mark_path = c_char_p(bytes(mark_path,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">mydll.steganographs(image_path,mark_path)</span><br></pre></td></tr></table></figure>
 
 <p>##错误三 64位不兼容32位</p>
 <p>擦，我尝试编译导入第二个dll，结果又报错。。。刚刚才装完64的python，又尼玛报错64不兼容32</p>
-<p><img src="../assets/image/1571043020985.png" alt="1571043020985"></p>
-<p><img src="../assets/image/1571043053934.png" alt="1571043053934"></p>
+<p><img src="../../../../../../assets/image/1571043020985.png" alt="1571043020985"></p>
+<p><img src="../../../../../../assets/image/1571043053934.png" alt="1571043053934"></p>
 <p>fuck！！！！这次我换一个方法解决了，把vs2017编译环境改成64位，</p>
-<p><img src="../assets/image/1571043092369.png" alt="1571043092369"></p>
+<p><img src="../../../../../../assets/image/1571043092369.png" alt="1571043092369"></p>
 <p>解决方案</p>
-<p><img src="../assets/image/1571043100873.png" alt="1571043100873"></p>
+<p><img src="../../../../../../assets/image/1571043100873.png" alt="1571043100873"></p>
 <p>然后清理解决方案，重新生成解决方案</p>
-<p><img src="../assets/image/1571043131364.png" alt="1571043131364"></p>
+<p><img src="../../../../../../assets/image/1571043131364.png" alt="1571043131364"></p>
 <p>完美！</p>
 <h2 id="干货"><a href="#干货" class="headerlink" title="干货"></a>干货</h2><p>重装了python，需要换源，国外慢，推荐一个换源工具pqi</p>
 <p>###pip换源工具pqi</p>
