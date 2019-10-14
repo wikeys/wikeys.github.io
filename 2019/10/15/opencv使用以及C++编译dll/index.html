@@ -5,36 +5,36 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="dns-prefetch" href="http://wikeys.github.io">
+  <link rel="dns-prefetch" href>
   <title>Opencv环境设置以及踩坑 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="下载好opencv的包，解压到D盘  在vs2017中新建好项目，dll项目  找到调试-&amp;gt;属性  把opencv的这两个目录包含进去  库目录则是这个，(测试过，包含vc15时候，使用imshow时候会报错，所以这里包含vc14)  然后是添加依赖项  1把这个添加进去opencv_world411d.lib  然后环境变量中也需要配置  编译成功，找到dll  #Python加载dll">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Opencv环境设置以及踩坑">
-<meta property="og:url" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/index.html">
+<meta property="og:url" content="/2019/10/15/opencv使用以及C++编译dll/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="下载好opencv的包，解压到D盘  在vs2017中新建好项目，dll项目  找到调试-&amp;gt;属性  把opencv的这两个目录包含进去  库目录则是这个，(测试过，包含vc15时候，使用imshow时候会报错，所以这里包含vc14)  然后是添加依赖项  1把这个添加进去opencv_world411d.lib  然后环境变量中也需要配置  编译成功，找到dll  #Python加载dll">
 <meta property="og:locale" content="ch">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019501143.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019791972.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019531491.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019602387.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019628725.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019703253.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019761814.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571020039186.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571025199503.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571025505355.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043020985.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043053934.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043092369.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043100873.png">
-<meta property="og:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043131364.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019501143.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019791972.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019531491.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019602387.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019628725.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019703253.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019761814.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571020039186.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571025199503.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571025505355.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043020985.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043053934.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043092369.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043100873.png">
+<meta property="og:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571043131364.png">
 <meta property="og:updated_time" content="2019-10-14T21:14:18.353Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Opencv环境设置以及踩坑">
 <meta name="twitter:description" content="下载好opencv的包，解压到D盘  在vs2017中新建好项目，dll项目  找到调试-&amp;gt;属性  把opencv的这两个目录包含进去  库目录则是这个，(测试过，包含vc15时候，使用imshow时候会报错，所以这里包含vc14)  然后是添加依赖项  1把这个添加进去opencv_world411d.lib  然后环境变量中也需要配置  编译成功，找到dll  #Python加载dll">
-<meta name="twitter:image" content="http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019501143.png">
+<meta name="twitter:image" content="/2019/10/15/opencv使用以及C++编译dll/assets/image/1571019501143.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -314,7 +314,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://wikeys.github.io/2019/10/15/opencv使用以及C++编译dll/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http:/2019/10/15/opencv使用以及C++编译dll/" alt="微信分享二维码">
     </div>
 </div>
 
