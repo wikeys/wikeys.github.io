@@ -6,14 +6,14 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href>
-  <title>Opencv环境设置以及Python加载dll踩坑 | Hexo</title>
+  <title>Opencv环境设置 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="下载好opencv的包，解压到D盘">
+  <meta name="description" content="opencv windows安装下载好opencv的包，解压到D盘">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Opencv环境设置以及Python加载dll踩坑">
+<meta property="og:title" content="Opencv环境设置">
 <meta property="og:url" content="/2019/10/15/opencv使用以及C++编译dll/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="下载好opencv的包，解压到D盘">
+<meta property="og:description" content="opencv windows安装下载好opencv的包，解压到D盘">
 <meta property="og:locale" content="ch">
 <meta property="og:image" content="/assets/image/1571019501143.png">
 <meta property="og:image" content="/assets/image/1571019791972.png">
@@ -23,17 +23,10 @@
 <meta property="og:image" content="/assets/image/1571019703253.png">
 <meta property="og:image" content="/assets/image/1571019761814.png">
 <meta property="og:image" content="/assets/image/1571020039186.png">
-<meta property="og:image" content="/assets/image/1571025199503.png">
-<meta property="og:image" content="/assets/image/1571025505355.png">
-<meta property="og:image" content="/assets/image/1571043020985.png">
-<meta property="og:image" content="/assets/image/1571043053934.png">
-<meta property="og:image" content="/assets/image/1571043092369.png">
-<meta property="og:image" content="/assets/image/1571043100873.png">
-<meta property="og:image" content="/assets/image/1571043131364.png">
-<meta property="og:updated_time" content="2019-10-15T11:30:52.805Z">
+<meta property="og:updated_time" content="2019-10-15T11:46:13.400Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Opencv环境设置以及Python加载dll踩坑">
-<meta name="twitter:description" content="下载好opencv的包，解压到D盘">
+<meta name="twitter:title" content="Opencv环境设置">
+<meta name="twitter:description" content="opencv windows安装下载好opencv的包，解压到D盘">
 <meta name="twitter:image" content="/assets/image/1571019501143.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -177,7 +170,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Opencv环境设置以及Python加载dll踩坑
+      Opencv环境设置
     </h1>
   
 
@@ -190,7 +183,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>下载好opencv的包，解压到D盘</p>
+        <h1 id="opencv-windows安装"><a href="#opencv-windows安装" class="headerlink" title="opencv windows安装"></a>opencv windows安装</h1><p>下载好opencv的包，解压到D盘</p>
 <p><img src="../../../../../../../../../../../../assets/image/1571019501143.png" alt="1571019501143"></p>
 <a id="more"></a>
 <p>在vs2017中新建好项目，dll项目</p>
@@ -209,34 +202,20 @@
 <p><img src="../../../../../../../../../../../../assets/image/1571019761814.png" alt="1571019761814"></p>
 <p>编译成功，找到dll</p>
 <p><img src="../../../../../../../../../../../../assets/image/1571020039186.png" alt="1571020039186"></p>
-<p>#Python加载dll</p>
-<p>使用cytpes来加载DLL/SO</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">mydll = cdll.LoadLibrary(<span class="string">'Dll1.dll'</span>)</span><br><span class="line">mydll.steganographs(image_path,mark_path)</span><br></pre></td></tr></table></figure>
+<p>#opencv linux编译安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/Itseez/opencv.git 同步opencv</span><br><span class="line">sudo apt-get install build-essential </span><br><span class="line">sudo apt-get install cmake git libgtk2.0-dev pkg-config libavcodec-dev libavformat-dev libswscale-dev</span><br><span class="line">sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev 安装依赖库</span><br><span class="line">mkdir build </span><br><span class="line">cd build</span><br><span class="line">cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=/usr/local ..</span><br></pre></td></tr></table></figure>
 
-<h2 id="错误一：32位不兼容64位dll"><a href="#错误一：32位不兼容64位dll" class="headerlink" title="错误一：32位不兼容64位dll"></a>错误一：32位不兼容64位dll</h2><p><img src="../../../../../../../../../../../../assets/image/1571025199503.png" alt="1571025199503"></p>
-<p>报错了，原因是：我的vs2017是64位的，编译出来的dll是64位的。而python是32位的，</p>
-<p>解决办法:  重装一个64位的系统</p>
-<h2 id="错误二：Python调用DLL函数之传递数值"><a href="#错误二：Python调用DLL函数之传递数值" class="headerlink" title="错误二：Python调用DLL函数之传递数值"></a>错误二：Python调用DLL函数之传递数值</h2><p>如果直接传值，只会传入第一个字符</p>
-<p><img src="../../../../../../../../../../../../assets/image/1571025505355.png" alt="1571025505355"></p>
-<p>需要使用ctypes 中的c_char_p  需要注意必须是bytes格式</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> ctypes <span class="keyword">import</span> *</span><br><span class="line">mydll = cdll.LoadLibrary(<span class="string">'Dll1.dll'</span>)</span><br><span class="line">image_path = c_char_p(bytes(image_path,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">mark_path = c_char_p(bytes(mark_path,encoding=<span class="string">"utf-8"</span>))</span><br><span class="line">mydll.steganographs(image_path,mark_path)</span><br></pre></td></tr></table></figure>
+<p>上面的<code>CMAKE_BUILD_TYPE =RELEASE</code>指明编译的版本是Release版，<code>CMAKE_INSTALL_PREFIX=/usr/local</code>指明编译后的可执行程序的存放目录。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">make    </span><br><span class="line">sudo make install</span><br></pre></td></tr></table></figure>
 
-<p>##错误三 64位不兼容32位</p>
-<p>擦，我尝试编译导入第二个dll，结果又报错。。。刚刚才装完64的python，又尼玛报错64不兼容32</p>
-<p><img src="../../../../../../../../../../../../assets/image/1571043020985.png" alt="1571043020985"></p>
-<p><img src="../../../../../../../../../../../../assets/image/1571043053934.png" alt="1571043053934"></p>
-<p>fuck！！！！这次我换一个方法解决了，把vs2017编译环境改成64位，</p>
-<p><img src="../../../../../../../../../../../../assets/image/1571043092369.png" alt="1571043092369"></p>
-<p>解决方案</p>
-<p><img src="../../../../../../../../../../../../assets/image/1571043100873.png" alt="1571043100873"></p>
-<p>然后清理解决方案，重新生成解决方案</p>
-<p><img src="../../../../../../../../../../../../assets/image/1571043131364.png" alt="1571043131364"></p>
-<p>完美！</p>
-<h2 id="干货"><a href="#干货" class="headerlink" title="干货"></a>干货</h2><p>重装了python，需要换源，国外慢，推荐一个换源工具pqi</p>
-<p>###pip换源工具pqi</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pip install pqi</span><br><span class="line">pqi list</span><br><span class="line">pqi use tuna</span><br></pre></td></tr></table></figure>
+<p>配置变量环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/profile</span><br><span class="line">输入 </span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</span><br><span class="line">export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH</span><br><span class="line"></span><br><span class="line">vim /etc/bash.bashrc</span><br><span class="line">PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/pkgconfig </span><br><span class="line">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib</span><br><span class="line"></span><br><span class="line">source /etc/profile 更新变量</span><br></pre></td></tr></table></figure>
 
+<p>理论上是没什么问题是，但是我执行pkg-config 是会找不到opencv.pc的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libssl-dev</span><br></pre></td></tr></table></figure>
 
+<p>把这个装上就ok了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">g++ -o main main.cpp`pkg-config opencv --cflags --libs`</span><br></pre></td></tr></table></figure>
       
 
       
