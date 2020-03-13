@@ -43,7 +43,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="" class="js-avatar">
+			<img src="https://wikeys.github.io/assets/image/image.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 		  <h1 class="header-author"><a href="/">wikeys</a></h1>
@@ -101,7 +101,7 @@
 	<div class="intrude-less">
 		<header id="header" class="inner">
 			<div class="profilepic">
-				<img src="" class="js-avatar">
+				<img src="https://wikeys.github.io/assets/image/image.jpg" class="js-avatar">
 			</div>
 			<hgroup>
 			  <h1 class="header-author js-header-author">wikeys</h1>
@@ -151,6 +151,129 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-学校课程之Ollydbg逆向程序破解" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/03/13/学校课程之Ollydbg逆向程序破解/">学校课程实验之OD逆向简单程序</a>
+    </h1>
+  
+
+        
+        <a href="/2020/03/13/学校课程之Ollydbg逆向程序破解/" class="archive-article-date">
+  	<time datetime="2020-03-13T12:36:04.025Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>眨眼就大三了。。时光飞逝啊。</p>
+<p>学校老师在合天开了个无线攻防实验课程，个人觉得还不错，就在博客记录下。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103256100.png" alt="1584103256100"></p>
+<p>##1. 实验环境</p>
+<p>一台Windows 7系统电脑；实验工具Ollydbg 1.10汉化版、2.01原版，以及不知名垃圾注册软件 CLINE95.EXE  </p>
+<p>##2.预备知识</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. 常用汇编代码如下（一定要熟练）：</span><br><span class="line">  cmp a,b // 比较a与b</span><br><span class="line">  mov a,b // 把b值送给a值，使a=b</span><br><span class="line">  ret // 返回主程序</span><br><span class="line">  nop // 无作用</span><br><span class="line">  call // 调用子程序，子程序以ret结尾</span><br><span class="line">  je 或jz // 相等则跳（机器码是74或84）</span><br><span class="line">  jne 或jnz // 不相等则跳（机器码是75或85）</span><br><span class="line">  jmp // 无条件跳（机器码是EB）</span><br><span class="line">  jb // 若小于则跳</span><br><span class="line">  ja // 若大于则跳</span><br><span class="line">  jg // 若大于则跳</span><br><span class="line">  jge // 若大于等于则跳</span><br><span class="line">  jl // 若小于则跳</span><br><span class="line">  pop xxx // xxx出栈</span><br><span class="line">  push xxx // xxx压栈</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-调试过程"><a href="#3-调试过程" class="headerlink" title="3.调试过程"></a>3.调试过程</h2><p>###更改程序判断逻辑</p>
+<p>打开OD，载入CLINE95.EXE，并Shift+F9运行程序至运行状态。目标是破解CLINE95的注册码机制，随便输入点什么。让他产生错误。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103438309.png" alt="1584103438309"></p>
+<p>可以知道。如果程序注册码错误就会弹出”Sorry that is an invalid registration code”</p>
+<p>进入od，搜索该字符串。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103451864.png" alt="1584103451864"></p>
+<p>搜索可以找到该字符串的汇编代码</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103467685.png" alt="1584103467685"></p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103470809.png" alt="1584103470809"></p>
+<p>可以看到此处，利用<code>CMP</code>比较了<code>ECX</code> <code>EDX</code> 寄存器。如果相等则跳转到<code>4024E6</code>，不相等则继续执行，又把<code>EDX</code>和<code>361DEA</code>相比较，如果相等则跳转<code>4024E6</code>，不相等则继续执行，就到了我们的错误字符串了。那么这里，我们可以把<code>JE</code>改成<code>JNE</code>，不相等则跳转，那么程序是不是就不会进入错误字符串流程了。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103480597.png" alt="1584103480597"></p>
+<p>定几个断点查看代码情况</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103489223.png" alt="1584103489223"></p>
+<p>最后，可以看到代码已经进入成功的流程</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103527341.png" alt="1584103527341"></p>
+<p>###不更改注册程序判断逻辑(注册)</p>
+<p> 思路则是：</p>
+<blockquote>
+<p>第一个实验，不是修改<code>cmp</code>的进位改变跳转规则。那么我们能不能读取<code>CMP</code> 所比较的<code>EDX</code> 和<code>ECX</code>的寄存器值呢？</p>
+</blockquote>
+<p><img src="../../../../../../../../../../../../assets/image/1584103631022.png" alt="1584103631022"></p>
+<p>在此处下一个断点</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103987891.png" alt="1584103987891"></p>
+<p>可以从寄存器中读取到值。可是我不知道是不是这个注册码是不是和用户输入的有关。所以我决定输入不同的，来看看这几个值。</p>
+<blockquote>
+<p>第一组: 输入： <code>123456</code></p>
+<pre><code>`ECX` `000790CC`</code></pre></blockquote>
+<blockquote>
+<p>第二组: 输入： <code>pengweishishuaige</code></p>
+<p>  <code>ECX</code> <code>0020BBC</code></p>
+</blockquote>
+<p>好了。我们来定位这个注册码算法怎么生成</p>
+<p>我输入了<code>pengwei_shishuaige</code> 和<code>123456</code></p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103973904.png" alt="1584103973904">  </p>
+<p>这里我们可以看出，EDI获取了我们输入的<code>pengwei_shishuaige</code>，而寄存器<code>EAX</code>则是保存了我们输入的<code>123456</code>的十六进制。然后我们每一步都下一个断点，观察。然后把<code>EAX</code>赋值给<code>EDX</code>,再对<code>ECX</code>做<code>FFFFFF</code>初始化。然后清空<code>EAX</code>。<code>repne scas byte ptr es:[edi]</code>这条命令是计算我们输入的用户名的长度</p>
+<p>执行完毕之后，</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584103961259.png" alt="1584103961259"></p>
+<p>可以发现<code>ECX</code>变成了<code>FFFFFFEC</code>，从<code>FFFFFFFF</code> 变成<code>FFFFFFEC</code>，减少了十进制19。</p>
+<p>我们输入了<code>pengwei_shishuaige</code> 正好是18个字符。再加上一个空白的字符。刚好是19个。所以现在的<code>EXC</code>是<code>FFFFFFEC</code>，然后再对<code>EXC</code>取反<code>NOT 00000013</code>,则是19的十六进制。再自减1变成了00000012.然后</p>
+<p><code>MOVSX EAX,BYTE PTR DS:[4093E0]</code></p>
+<p>取了DS数据段里面的也就是我们的用户名的第一个p的十进制112的十六进制。</p>
+<p>所以<code>EAX 00000070</code>,然后再对<code>EXC</code> 和<code>EAX</code>做乘法</p>
+<p>即是<code>00000012 * 00000070 = 2016(0000007e0)</code></p>
+<p>然后<code>shl</code>，左移十位。这里可能是寄存器长度不够，然后直接后面补了十位。</p>
+<p>从<code>11111100000</code> 变成了 <code>111111000000000000000</code></p>
+<p>然后再加上<code>2f8cc</code>.就得到了<code>ECX</code>。</p>
+<p>下面我写了个框图来说明：</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584104048055.png" alt="1584104048055"></p>
+<p>最后写了一个python简易脚本来完成注册码的计算</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584104072236.png" alt="1584104072236"></p>
+<p>至此已经完成破解注册</p>
+<p>##4.后记</p>
+<p>上文若有分析不准确，还请看官大佬多多指教。漫漫安全路，上下求索。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2020/03/13/学校课程之Ollydbg逆向程序破解/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-python编译C++" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -356,7 +479,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2019 wikeys
+    		&copy; 2020 wikeys
     	</div>
       	<div class="footer-right">
       		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
@@ -487,7 +610,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
         <ul class="search-ul">
           
             <li class="search-li">
-              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+              <a href="https://bailixiaoyang.github.io/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>小灰灰的博客</a>
             </li>
           
             <li class="search-li">
