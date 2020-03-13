@@ -29,7 +29,7 @@
 <meta property="og:image" content="/assets/image/1584103961259.png">
 <meta property="og:image" content="/assets/image/1584104048055.png">
 <meta property="og:image" content="/assets/image/1584104072236.png">
-<meta property="og:updated_time" content="2020-03-13T13:10:36.457Z">
+<meta property="og:updated_time" content="2020-03-13T13:13:05.232Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学校课程实验之OD逆向简单程序">
 <meta name="twitter:description" content="眨眼就大三了。。时光飞逝啊。 学校老师在合天开了个无线攻防实验课程，个人觉得还不错，就在博客记录下。">
@@ -194,13 +194,10 @@
 <a id="more"></a>
 
 <p><img src="../../../../../../../../../../../../assets/image/1584103256100.png" alt="1584103256100"></p>
-<p>##1. 实验环境</p>
-<p>一台Windows 7系统电脑；实验工具Ollydbg 1.10汉化版、2.01原版，以及不知名垃圾注册软件 CLINE95.EXE  </p>
-<p>##2.预备知识</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. 常用汇编代码如下（一定要熟练）：</span><br><span class="line">  cmp a,b // 比较a与b</span><br><span class="line">  mov a,b // 把b值送给a值，使a=b</span><br><span class="line">  ret // 返回主程序</span><br><span class="line">  nop // 无作用</span><br><span class="line">  call // 调用子程序，子程序以ret结尾</span><br><span class="line">  je 或jz // 相等则跳（机器码是74或84）</span><br><span class="line">  jne 或jnz // 不相等则跳（机器码是75或85）</span><br><span class="line">  jmp // 无条件跳（机器码是EB）</span><br><span class="line">  jb // 若小于则跳</span><br><span class="line">  ja // 若大于则跳</span><br><span class="line">  jg // 若大于则跳</span><br><span class="line">  jge // 若大于等于则跳</span><br><span class="line">  jl // 若小于则跳</span><br><span class="line">  pop xxx // xxx出栈</span><br><span class="line">  push xxx // xxx压栈</span><br></pre></td></tr></table></figure>
+<h2 id="1-实验环境"><a href="#1-实验环境" class="headerlink" title="1. 实验环境"></a>1. 实验环境</h2><p>一台Windows 7系统电脑；实验工具Ollydbg 1.10汉化版、2.01原版，以及不知名垃圾注册软件 CLINE95.EXE  </p>
+<h2 id="2-预备知识"><a href="#2-预备知识" class="headerlink" title="2.预备知识"></a>2.预备知识</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">1. 常用汇编代码如下（一定要熟练）：</span><br><span class="line">  cmp a,b // 比较a与b</span><br><span class="line">  mov a,b // 把b值送给a值，使a=b</span><br><span class="line">  ret // 返回主程序</span><br><span class="line">  nop // 无作用</span><br><span class="line">  call // 调用子程序，子程序以ret结尾</span><br><span class="line">  je 或jz // 相等则跳（机器码是74或84）</span><br><span class="line">  jne 或jnz // 不相等则跳（机器码是75或85）</span><br><span class="line">  jmp // 无条件跳（机器码是EB）</span><br><span class="line">  jb // 若小于则跳</span><br><span class="line">  ja // 若大于则跳</span><br><span class="line">  jg // 若大于则跳</span><br><span class="line">  jge // 若大于等于则跳</span><br><span class="line">  jl // 若小于则跳</span><br><span class="line">  pop xxx // xxx出栈</span><br><span class="line">  push xxx // xxx压栈</span><br></pre></td></tr></table></figure>
 
-<h2 id="3-调试过程"><a href="#3-调试过程" class="headerlink" title="3.调试过程"></a>3.调试过程</h2><p>###更改程序判断逻辑</p>
-<p>打开OD，载入CLINE95.EXE，并Shift+F9运行程序至运行状态。目标是破解CLINE95的注册码机制，随便输入点什么。让他产生错误。</p>
+<h2 id="3-调试过程"><a href="#3-调试过程" class="headerlink" title="3.调试过程"></a>3.调试过程</h2><h3 id="更改程序判断逻辑"><a href="#更改程序判断逻辑" class="headerlink" title="更改程序判断逻辑"></a>更改程序判断逻辑</h3><p>打开OD，载入CLINE95.EXE，并Shift+F9运行程序至运行状态。目标是破解CLINE95的注册码机制，随便输入点什么。让他产生错误。</p>
 <p><img src="../../../../../../../../../../../../assets/image/1584103438309.png" alt="1584103438309"></p>
 <p>可以知道。如果程序注册码错误就会弹出”Sorry that is an invalid registration code”</p>
 <p>进入od，搜索该字符串。</p>
@@ -214,8 +211,7 @@
 <p><img src="../../../../../../../../../../../../assets/image/1584103489223.png" alt="1584103489223"></p>
 <p>最后，可以看到代码已经进入成功的流程</p>
 <p><img src="../../../../../../../../../../../../assets/image/1584103527341.png" alt="1584103527341"></p>
-<p>###不更改注册程序判断逻辑(注册)</p>
-<p> 思路则是：</p>
+<h3 id="不更改注册程序判断逻辑-注册"><a href="#不更改注册程序判断逻辑-注册" class="headerlink" title="不更改注册程序判断逻辑(注册)"></a>不更改注册程序判断逻辑(注册)</h3><p> 思路则是：</p>
 <blockquote>
 <p>第一个实验，不是修改<code>cmp</code>的进位改变跳转规则。那么我们能不能读取<code>CMP</code> 所比较的<code>EDX</code> 和<code>ECX</code>的寄存器值呢？</p>
 </blockquote>
@@ -250,8 +246,7 @@
 <p>最后写了一个python简易脚本来完成注册码的计算</p>
 <p><img src="../../../../../../../../../../../../assets/image/1584104072236.png" alt="1584104072236"></p>
 <p>至此已经完成破解注册</p>
-<p>##4.后记</p>
-<p>上文若有分析不准确，还请看官大佬多多指教。漫漫安全路，上下求索。</p>
+<h2 id="4-后记"><a href="#4-后记" class="headerlink" title="4.后记"></a>4.后记</h2><p>上文若有分析不准确，还请看官大佬多多指教。漫漫安全路，上下求索。</p>
 
       
 
