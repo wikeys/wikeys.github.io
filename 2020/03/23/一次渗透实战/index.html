@@ -6,15 +6,39 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href>
-  <title>Archives: 2020 | Hexo</title>
+  <title>一次项目渗透实战 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="/archives/2020/index.html">
+  <meta name="description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一次项目渗透实战">
+<meta property="og:url" content="/2020/03/23/一次渗透实战/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
 <meta property="og:locale" content="ch">
+<meta property="og:image" content="/assets/image/1584961734741.png">
+<meta property="og:image" content="/assets/image/1584962831025.png">
+<meta property="og:image" content="/assets/image/1564300543294.png">
+<meta property="og:image" content="/assets/image/1564709927734.png">
+<meta property="og:image" content="/assets/image/1564548543497.png">
+<meta property="og:image" content="/assets/image/1584963272703.png">
+<meta property="og:image" content="/assets/image/1564651837313.png">
+<meta property="og:image" content="/assets/image/1564651934477.png">
+<meta property="og:image" content="/assets/image/1564652073114.png">
+<meta property="og:image" content="/assets/image/1564720375538.png">
+<meta property="og:image" content="/assets/image/1564753695717.png">
+<meta property="og:image" content="/assets/image/1584963580974.png">
+<meta property="og:image" content="/assets/image/1564846937458.png">
+<meta property="og:image" content="/assets/image/1584963726663.png">
+<meta property="og:image" content="/assets/image/1584963803604.png">
+<meta property="og:image" content="/assets/image/1584963871511.png">
+<meta property="og:image" content="/assets/image/1584964755046.png">
+<meta property="og:image" content="/assets/image/1564929892302.png">
+<meta property="og:image" content="/assets/image/1584964843240.png">
+<meta property="og:updated_time" content="2020-03-23T14:05:24.544Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="一次项目渗透实战">
+<meta name="twitter:description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
+<meta name="twitter:image" content="/assets/image/1584961734741.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,76 +174,231 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-一次渗透实战" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      一次项目渗透实战
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/23/一次渗透实战/" class="archive-article-date">
+
+        
+        <a href="/2020/03/23/一次渗透实战/" class="archive-article-date">
   	<time datetime="2020-03-23T11:05:33.160Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-23</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/23/一次渗透实战/">一次项目渗透实战</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>19年的某次项目，回顾时候放出来做博客文章。</p>
+<p>##1. 后台getshell绕过</p>
+<p>存在某处上传</p>
+<a id="more"></a>
+<p><img src="../../../../../../../../../../../../assets/image/1584961734741.png" alt="1584961734741"></p>
+<p>这里发现上传任意文件，但是会检测文件内容，上传的不能带有eval。带有就会返回为空，不提交。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584962831025.png" alt="1584962831025"></p>
+<p>大致思路可以有：写一个文件保存的aspx，然后去访问，就可以再根目录生成一个aspx文件。不过这里很蛋疼，这个同样会检测，如果你代码里面写了eval，就会失败。这里我把eval做了一个数组，然后提交</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564300543294.png" alt="1564300543294"></p>
+<p>上传成功。进入之后，权限很低，仅仅是iis用户</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564709927734.png" alt="1564709927734"></p>
+<p>##2. NET审计</p>
+<p>得到shell权限之后，我分析了一波他的网站源码。</p>
+<p>.NET core的反编译可以使用dnSpy  和  ILSpy  两个都可以</p>
+<p>先来了解一下.NET的MVC模式</p>
+<p>###.NET的MVC路由配置</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564548543497.png" alt="1564548543497"></p>
+<p>我有一个Products的请求，然后将它映射到相关的控制器，由控制器去构建Model，Model返回给控制器相关数据，控制器就将这些数据渲染给View，最终返回一个html页面给用户。</p>
+<p>而这里要讲的路由就是，怎么把HTTP请求正确的映射给正确的Controller，并且映射到正确的方法上</p>
+<p>路由分两种 一种是Conventional Routing  按约定配置路由</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.UseMvcWithDefaultRoute();  <span class="comment">//使用默认路由，</span></span><br></pre></td></tr></table></figure>
 
-        <div class="article-info info-on-right">
-          
-          
+<p>等价于下面这种自定义路由</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app.UseMvc(routes =&gt;</span><br><span class="line">&#123;</span><br><span class="line">   routes.MapRoute(<span class="string">"default"</span>, <span class="string">"&#123;controller=Home&#125;/&#123;action=Index&#125;/&#123;id?&#125;"</span>);</span><br><span class="line">&#125;);  <span class="comment">//自定义路由，如果Http请求没有控制器，就自动找Home，没有方法就自动找Index</span></span><br><span class="line"></span><br><span class="line">Http请求  /					 -&gt;-&gt;  HomeController下的Index action</span><br><span class="line">		 /computer/index 	  -&gt;-&gt;  computerController下的Index action</span><br></pre></td></tr></table></figure>
 
+<p>第二种是Attribute Routing  特性路由（webapi）</p>
+<p>​    例子，现在有一个controllers名为about,其有两个方法me和company</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">Tutorial.Web.Controllers</span></span><br><span class="line">&#123;</span><br><span class="line">	[<span class="meta">Route(<span class="meta-string">"about"</span>)</span>]    <span class="comment">//这种就是。Controller级别的.想访问这个About控制器，路径必须以about开始</span></span><br><span class="line">	<span class="comment">// [Route("[Controller]/[action]")]  或者直接这样子</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">class</span> <span class="title">AboutController</span></span><br><span class="line">	&#123;</span><br><span class="line">	  <span class="comment">//  假设我想直接输入/About  就能访问me 就把Route留空。</span></span><br><span class="line">		[<span class="meta">Route(<span class="meta-string">" "</span>)</span>]</span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Me</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">			</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">"HH"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		[<span class="meta">Route(<span class="meta-string">"Company"</span>)</span>]   <span class="comment">//匹配Company</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> <span class="keyword">string</span> <span class="title">Company</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>		&#123;</span><br><span class="line">			<span class="keyword">return</span> <span class="string">"AA"</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">? 将一个路由参数标记为 可选参数</span><br><span class="line">[<span class="meta">Route(<span class="meta-string">"api/product/&#123;id:int&#125;"</span>)</span>]   将id参数绑定为<span class="keyword">int</span>类型</span><br><span class="line">[<span class="meta">HttpPost</span>]</span><br><span class="line">[<span class="meta">Route(<span class="meta-string">"api/product/&#123;id&#125;"</span>)</span>]   标记为post类型</span><br></pre></td></tr></table></figure>
+
+<p>###审计过程</p>
+<p>这个程序我一步一步来说我的思路，毕竟我才入门.NET ，可能有一点不准确。还请指出我存在的错误。</p>
+<p>首先我要弄懂的是这个CMS是怎么去访问的，怎么映射到相关方法，权限控制哪些能访问的。</p>
+<p>在.NET中，上面说的路由，是HTTP请求正确的映射给正确的Controller，并且映射到正确的方法上。但是在映射之前，你需要指定程序去服务才行。</p>
+<p>web.config默认配置就有说明，怎么去服务请求的.</p>
+<p>这是manager的配置，可以看到访问/API/ 就把请求给webapihandle去服务</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584963272703.png" alt="1584963272703"></p>
+<p>这是webapihandle的文件内容</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564651837313.png" alt="1564651837313"></p>
+<p>实现了一个一般处理程序处理过程(HttpHandler)，来响应我们的http请求。</p>
+<p>然后接受我们的参数，通过反射的方法调用其它dll中的类和方法</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564651934477.png" alt="1564651934477"></p>
+<p>加载dll文件</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564652073114.png" alt="1564652073114"></p>
+<p>通过HTTP请求来访问加载dll文件的方法和属性.例如。</p>
+<p><a href="http://localhost/API/SystemUser/Create/" target="_blank" rel="noopener">http://localhost/API/SystemUser/Create/</a> <strong>返回</strong>：[0]:API,[1]:SystemUser,[2]:Create</p>
+<p>requestObject是加载方法，而parametValues是方法所需要的参数。然后调用该方法和类，传参，如果请求成功则返回json数组，请求失败则用自定义的json数组</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564720375538.png" alt="1564720375538"></p>
+<p>这里我觉得需要注意的，它请求的类名都是以API结尾的，所有我们就能解释后面访问为什么不需要加上API。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564753695717.png" alt="1564753695717"></p>
+<p>下面这一块我尝试理解了一下，这里应该是一个改写的Route，它大概实现了对路由的控制功能，这里分三种情况</p>
+<ul>
+<li><code>[WebAPI(false)]</code>  不用判断登入状态</li>
+<li><code>[WebAPI(&quot;xxx.Access&quot;)]</code> 判断登入状态且判断用户权限</li>
+<li><code>[WebAPI]</code>  单单判断登入状态</li>
+</ul>
+<p><img src="../../../../../../../../../../../../assets/image/1584963580974.png" alt="1584963580974"></p>
+<p>我们没有登入的方法，所以需要去找那些不需要登入的方法。</p>
+<p>大概说了一下我怎么去看这个cms的，下面漏洞发现过程就不一一细说了。我是一个一个方法去看，只看我能访问的。</p>
+<p>###审计结果</p>
+<p>找了以下几个漏洞。</p>
+<p>一处上传漏洞</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564846937458.png" alt="1564846937458"></p>
+<p>一处sql注入，很明显了。直接拼接code，没有做任何处理。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584963726663.png" alt="1584963726663"></p>
+<p>一处上传漏洞，直接把文件后缀当作保存文件后缀，没自定义</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584963803604.png" alt="1584963803604"></p>
+<p>又一处sql注入漏洞，带报错的</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584963871511.png" alt="1584963871511"></p>
+<h2 id="3-烂土豆提权"><a href="#3-烂土豆提权" class="headerlink" title="3.烂土豆提权"></a>3.烂土豆提权</h2><p>偶然发现这个烂土豆，windows的一个本地特权提升工具。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1584964755046.png" alt="1584964755046"></p>
+<p>光提权没用，想登入3389得做映射。这里我用了frp来端口映射。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1564929892302.png" alt="1564929892302"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">frpc -c frpc.ini</span><br></pre></td></tr></table></figure>
+
+<p>OK! </p>
+<p><img src="../../../../../../../../../../../../assets/image/1584964843240.png" alt="1584964843240"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:/2020/03/23/一次渗透实战/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/13/学校课程之Ollydbg逆向程序破解/" class="archive-article-date">
-  	<time datetime="2020-03-13T12:36:04.025Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/13/学校课程之Ollydbg逆向程序破解/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">学校课程实验之OD逆向简单程序</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/13/学校课程之Ollydbg逆向程序破解/">学校课程实验之OD逆向简单程序</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
 
 
           </div>
@@ -242,8 +421,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
