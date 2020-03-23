@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href>
   <title>一次项目渗透实战 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
+  <meta name="description" content="19年的某次项目，回顾时候放出来做博客文章。 1. 后台getshell绕过存在某处上传">
 <meta property="og:type" content="article">
 <meta property="og:title" content="一次项目渗透实战">
 <meta property="og:url" content="/2020/03/23/一次渗透实战/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
+<meta property="og:description" content="19年的某次项目，回顾时候放出来做博客文章。 1. 后台getshell绕过存在某处上传">
 <meta property="og:locale" content="ch">
 <meta property="og:image" content="/assets/image/1584961734741.png">
 <meta property="og:image" content="/assets/image/1584962831025.png">
@@ -34,10 +34,10 @@
 <meta property="og:image" content="/assets/image/1584964755046.png">
 <meta property="og:image" content="/assets/image/1564929892302.png">
 <meta property="og:image" content="/assets/image/1584964843240.png">
-<meta property="og:updated_time" content="2020-03-23T14:05:24.544Z">
+<meta property="og:updated_time" content="2020-03-23T14:09:49.513Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一次项目渗透实战">
-<meta name="twitter:description" content="19年的某次项目，回顾时候放出来做博客文章。 ##1. 后台getshell绕过 存在某处上传">
+<meta name="twitter:description" content="19年的某次项目，回顾时候放出来做博客文章。 1. 后台getshell绕过存在某处上传">
 <meta name="twitter:image" content="/assets/image/1584961734741.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -195,8 +195,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>19年的某次项目，回顾时候放出来做博客文章。</p>
-<p>##1. 后台getshell绕过</p>
-<p>存在某处上传</p>
+<h2 id="1-后台getshell绕过"><a href="#1-后台getshell绕过" class="headerlink" title="1. 后台getshell绕过"></a>1. 后台getshell绕过</h2><p>存在某处上传</p>
 <a id="more"></a>
 <p><img src="../../../../../../../../../../../../assets/image/1584961734741.png" alt="1584961734741"></p>
 <p>这里发现上传任意文件，但是会检测文件内容，上传的不能带有eval。带有就会返回为空，不提交。</p>
@@ -205,12 +204,10 @@
 <p><img src="../../../../../../../../../../../../assets/image/1564300543294.png" alt="1564300543294"></p>
 <p>上传成功。进入之后，权限很低，仅仅是iis用户</p>
 <p><img src="../../../../../../../../../../../../assets/image/1564709927734.png" alt="1564709927734"></p>
-<p>##2. NET审计</p>
-<p>得到shell权限之后，我分析了一波他的网站源码。</p>
+<h2 id="2-NET审计"><a href="#2-NET审计" class="headerlink" title="2. NET审计"></a>2. NET审计</h2><p>得到shell权限之后，我分析了一波他的网站源码。</p>
 <p>.NET core的反编译可以使用dnSpy  和  ILSpy  两个都可以</p>
 <p>先来了解一下.NET的MVC模式</p>
-<p>###.NET的MVC路由配置</p>
-<p><img src="../../../../../../../../../../../../assets/image/1564548543497.png" alt="1564548543497"></p>
+<h3 id="NET的MVC路由配置"><a href="#NET的MVC路由配置" class="headerlink" title=".NET的MVC路由配置"></a>.NET的MVC路由配置</h3><p><img src="../../../../../../../../../../../../assets/image/1564548543497.png" alt="1564548543497"></p>
 <p>我有一个Products的请求，然后将它映射到相关的控制器，由控制器去构建Model，Model返回给控制器相关数据，控制器就将这些数据渲染给View，最终返回一个html页面给用户。</p>
 <p>而这里要讲的路由就是，怎么把HTTP请求正确的映射给正确的Controller，并且映射到正确的方法上</p>
 <p>路由分两种 一种是Conventional Routing  按约定配置路由</p>
@@ -252,8 +249,7 @@
 <p><img src="../../../../../../../../../../../../assets/image/1584963580974.png" alt="1584963580974"></p>
 <p>我们没有登入的方法，所以需要去找那些不需要登入的方法。</p>
 <p>大概说了一下我怎么去看这个cms的，下面漏洞发现过程就不一一细说了。我是一个一个方法去看，只看我能访问的。</p>
-<p>###审计结果</p>
-<p>找了以下几个漏洞。</p>
+<h3 id="审计结果"><a href="#审计结果" class="headerlink" title="审计结果"></a>审计结果</h3><p>找了以下几个漏洞。</p>
 <p>一处上传漏洞</p>
 <p><img src="../../../../../../../../../../../../assets/image/1564846937458.png" alt="1564846937458"></p>
 <p>一处sql注入，很明显了。直接拼接code，没有做任何处理。</p>
