@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href>
   <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
+  <meta name="description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
 <meta property="og:url" content="/2020/07/10/pwnhub公开赛-easy_thinkphp/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
+<meta property="og:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字">
 <meta property="og:locale" content="ch">
 <meta property="og:image" content="/assets/image/1594220882888.png">
 <meta property="og:image" content="/assets/image/1594220894501.png">
@@ -23,10 +23,10 @@
 <meta property="og:image" content="/assets/image/1594224920498.png">
 <meta property="og:image" content="/assets/image/1594225028624.png">
 <meta property="og:image" content="/assets/image/1594304616314.png">
-<meta property="og:updated_time" content="2020-07-10T03:44:30.538Z">
+<meta property="og:updated_time" content="2020-07-10T03:51:22.198Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
-<meta name="twitter:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
+<meta name="twitter:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字">
 <meta name="twitter:image" content="/assets/image/1594220882888.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -175,6 +175,8 @@
 <p><img src="../../../../../../../../../../../../assets/image/1594220894501.png" alt="1594220894501"></p>
 <p>  不能用xpath一系列的报错，问题不大，直接盲注就好了。</p>
 <p>可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字</p>
+<a id="more"></a>
+
 <h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><p>那么什么是explain呢？</p>
 <blockquote>
 <p>The <a href="https://dev.mysql.com/doc/refman/5.7/en/describe.html" target="_blank" rel="noopener"><code>DESCRIBE</code></a> and <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a> statements are synonyms. In practice, the <a href="https://dev.mysql.com/doc/refman/5.7/en/describe.html" target="_blank" rel="noopener"><code>DESCRIBE</code></a> keyword is more often used to obtain information about table structure, whereas <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a> is used to obtain a query execution plan (that is, an explanation of how MySQL would execute a query).</p>
