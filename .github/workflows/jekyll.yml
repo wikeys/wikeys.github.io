@@ -33,11 +33,8 @@ jobs:
        
     - name: Deploy blog
       run: |
-        git clone "https://${{ secrets.GH_REF }}" deploy_git
-        mv ./deploy_git/.git ./public/
-        cd ./public
         git config user.name "wikeys"
         git config user.email "wikeys@163.com"
-        git add .
-        git commit -m "GitHub Actions Auto Builder at $(date +'%Y-%m-%d %H:%M:%S')"
-        git push --force --quiet "https://${{ secrets.GH_TOKEN }}@${{ secrets.GH_REF }}" master:master
+        git add source/
+        git commit -m "Auto Update at $(date +'%Y-%m-%d %H:%M:%S')"
+        git push --force --quiet "htt
